@@ -1,2 +1,5 @@
 # DocCMiddleware
-DocC middleware for Vapor.
+
+Docc Middleware for Vapor.
+
+## Usage
