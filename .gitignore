@@ -1,0 +1,12 @@
+.DS_Store
+.build
+Packages
+*.xcodeproj
+xcuserdata/
+DerivedData/
+.netrc
+.swiftpm
+Package.resolved
+
+# For the VS Code fans.
+.vscode
