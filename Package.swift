@@ -12,6 +12,7 @@ let package = Package(
     dependencies: [
         // 💧 Vapor
         .package(url: "https://github.com/vapor/vapor", from: "4.65.1"),
+        .package(url: "https://github.com/swift-kipple/Tools", .upToNextMinor(from: "0.2.3")),
     ],
     targets: [
         // Product Targets
