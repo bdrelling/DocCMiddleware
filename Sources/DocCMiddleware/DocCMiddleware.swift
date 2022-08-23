@@ -11,6 +11,7 @@ import Vapor
 public struct DocCMiddleware: AsyncMiddleware {
     private let documentationDirectory: String
     private let archives: [DocCArchive]
+    private let redirectType: RedirectType
 
     private let staticFiles = [
         "favicon.ico",
@@ -29,44 +30,10 @@ public struct DocCMiddleware: AsyncMiddleware {
         "index/",
     ]
 
-    public init(documentationDirectory: String, archives: [DocCArchive]) {
+    public init(documentationDirectory: String, archives: [DocCArchive], redirectType: RedirectType = .normal) {
         self.documentationDirectory = documentationDirectory
         self.archives = archives
-    }
-
-    public init(documentationDirectory: String, archives: [String]) {
-        self.documentationDirectory = documentationDirectory
-        self.archives = archives.map { .init(name: $0, hostingBasePath: $0) }
-    }
-
-    public init(documentationDirectory: String, archive: DocCArchive) {
-        self.init(documentationDirectory: documentationDirectory, archives: [archive])
-    }
-
-    public init(documentationDirectory: String, archive: String) {
-        self.init(documentationDirectory: documentationDirectory, archives: [.init(name: archive)])
-    }
-
-    public init(app: Application, archives: [DocCArchive]) {
-        self.init(
-            documentationDirectory: app.directory.workingDirectory.appending("Docs"),
-            archives: archives
-        )
-    }
-
-    public init(app: Application, archives: [String]) {
-        self.init(
-            documentationDirectory: app.directory.workingDirectory.appending("Docs"),
-            archives: archives
-        )
-    }
-
-    public init(app: Application, archive: DocCArchive) {
-        self.init(app: app, archives: [archive])
-    }
-
-    public init(app: Application, archive: String) {
-        self.init(app: app, archives: [archive])
+        self.redirectType = redirectType
     }
 
     public func respond(to request: Request, chainingTo next: AsyncResponder) async throws -> Response {
@@ -108,10 +75,10 @@ public struct DocCMiddleware: AsyncMiddleware {
 
         if path.trimmingTrailingSlashes() == archive.hostingBasePath.trimmingSlashes() || path.trimmingTrailingSlashes() == "\(archive.hostingBasePath.trimmingLeadingSlashes())documentation" {
             // The path matches our hosting base path and/or documentation path, with or without trailing slashes.
-            return request.redirect(to: "\(archive.hostingBasePath)documentation/\(archive.archiveName.lowercased())")
+            return request.redirect(to: "\(archive.hostingBasePath)documentation/\(archive.archiveName.lowercased())", type: self.redirectType)
         } else if path.trimmingTrailingSlashes() == "\(archive.hostingBasePath.trimmingLeadingSlashes())/tutorials" {
             // The path matches our tutorials path, with or without trailing slashes.
-            return request.redirect(to: "\(archive.hostingBasePath)tutorials/\(archive.archiveName.lowercased())")
+            return request.redirect(to: "\(archive.hostingBasePath)tutorials/\(archive.archiveName.lowercased())", type: self.redirectType)
         } else if self.staticFileMatches(path: path, for: archive) {
             // The path matches a static file.
             return try await self.streamStaticFile(atPath: path, for: archive, request: request)
@@ -176,5 +143,63 @@ public struct DocCMiddleware: AsyncMiddleware {
         }
 
         return false
+    }
+}
+
+// MARK: - Convenience
+
+public extension DocCMiddleware {
+    init(documentationDirectory: String, archives: [String], redirectType: RedirectType = .normal) {
+        self.init(
+            documentationDirectory: documentationDirectory,
+            archives: archives.map { .init(name: $0, hostingBasePath: $0) },
+            redirectType: redirectType
+        )
+    }
+
+    init(documentationDirectory: String, archive: DocCArchive, redirectType: RedirectType = .normal) {
+        self.init(documentationDirectory: documentationDirectory, archives: [archive], redirectType: redirectType)
+    }
+
+    init(documentationDirectory: String, archive: String, redirectType: RedirectType = .normal) {
+        self.init(documentationDirectory: documentationDirectory, archives: [.init(name: archive)], redirectType: redirectType)
+    }
+
+    init(app: Application, archives: [DocCArchive], redirectType: RedirectType = .normal) {
+        self.init(
+            documentationDirectory: app.directory.docsDirectory,
+            archives: archives,
+            redirectType: redirectType
+        )
+    }
+
+    init(app: Application, archives: [String], redirectType: RedirectType = .normal) {
+        self.init(
+            documentationDirectory: app.directory.docsDirectory,
+            archives: archives,
+            redirectType: redirectType
+        )
+    }
+
+    init(app: Application, archive: DocCArchive, redirectType: RedirectType = .normal) {
+        self.init(
+            documentationDirectory: app.directory.docsDirectory,
+            archive: archive,
+            redirectType: redirectType
+        )
+    }
+
+    init(app: Application, archive: String, redirectType: RedirectType = .normal) {
+        self.init(
+            documentationDirectory: app.directory.docsDirectory,
+            archive: archive,
+            redirectType: redirectType
+        )
+    }
+}
+
+public extension DirectoryConfiguration {
+    var docsDirectory: String {
+        self.workingDirectory.appending("Docs")
     }
 }

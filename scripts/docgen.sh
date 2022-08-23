@@ -23,7 +23,7 @@ generate_archive() {
     # If we have defined a hosting base path, use it.
     if [ ! -z $hosting_base_path ]; then
         echo "Assigning --hosting-base-path of '${hosting_base_path}'."
-    
+
         swift package --allow-writing-to-directory $output_directory \
             generate-documentation \
             --output-path "${output_directory}/${target}.doccarchive" \
