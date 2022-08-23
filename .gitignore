@@ -10,3 +10,6 @@ Package.resolved
 
 # For the VS Code fans.
 .vscode
+
+# For documentation generation.
+Docs/

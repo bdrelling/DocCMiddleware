@@ -12,7 +12,7 @@ target='DocCMiddleware'
 
 # Define the output directory.
 # If this is left empty, the default location is used.
-output_directory=$1
+output_directory=${1-'Docs'}
 
 # Define a function for generating a .doccarchive.
 generate_archive() {

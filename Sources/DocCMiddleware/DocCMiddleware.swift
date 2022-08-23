@@ -24,6 +24,7 @@ public struct DocCMiddleware: AsyncMiddleware {
         "img/",
         "js/",
         "videos/",
+        "index/",
     ]
     
     public init(documentationDirectory: String, archives: [DocCArchive]) {
@@ -31,18 +32,38 @@ public struct DocCMiddleware: AsyncMiddleware {
         self.archives = archives
     }
     
+    public init(documentationDirectory: String, archives: [String]) {
+        self.documentationDirectory = documentationDirectory
+        self.archives = archives.map { .init(name: $0, hostingBasePath: $0) }
+    }
+    
     public init(documentationDirectory: String, archive: DocCArchive) {
         self.init(documentationDirectory: documentationDirectory, archives: [archive])
     }
     
+    public init(documentationDirectory: String, archive: String) {
+        self.init(documentationDirectory: documentationDirectory, archives: [.init(name: archive)])
+    }
+    
     public init(app: Application, archives: [DocCArchive]) {
         self.init(
-            documentationDirectory: app.directory.workingDirectory.appending(".build/plugins/Swift-DocC/outputs/"),
+            documentationDirectory: app.directory.workingDirectory.appending("Docs"),
+            archives: archives
+        )
+    }
+    
+    public init(app: Application, archives: [String]) {
+        self.init(
+            documentationDirectory: app.directory.workingDirectory.appending("Docs"),
             archives: archives
         )
     }
     
     public init(app: Application, archive: DocCArchive) {
+        self.init(app: app, archives: [archive])
+    }
+    
+    public init(app: Application, archive: String) {
         self.init(app: app, archives: [archive])
     }
 
