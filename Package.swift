@@ -12,6 +12,7 @@ let package = Package(
     dependencies: [
         // 💧 Vapor
         .package(url: "https://github.com/vapor/vapor", from: "4.65.1"),
+        .package(url: "https://github.com/apple/swift-docc-plugin", from: "1.0.0"),
     ],
     targets: [
         // Product Targets
@@ -21,11 +22,18 @@ let package = Package(
                 .product(name: "Vapor", package: "vapor"),
             ]
         ),
+        .executableTarget(
+            name: "Example",
+            dependencies: [
+                .target(name: "DocCMiddleware"),
+            ]
+        ),
         // Test Targets
         .testTarget(
             name: "DocCMiddlewareTests",
             dependencies: [
                 .target(name: "DocCMiddleware"),
+                .product(name: "XCTVapor", package: "vapor"),
             ]
         ),
     ]
