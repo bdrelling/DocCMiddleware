@@ -1,6 +1,5 @@
 # DocCMiddleware
 
-[![CI Status](https://github.com/bdrelling/DocCMiddleware/actions/workflows/tests.yml/badge.svg)](https://github.com/bdrelling/DocCMiddleware/actions/workflows/tests.yml)
 [![Latest Release](https://img.shields.io/github/v/tag/bdrelling/DocCMiddleware?color=blue&label=latest)](https://github.com/bdrelling/DocCMiddleware/releases)
 [![Swift Compatibility](https://img.shields.io/endpoint?url=https%3A%2F%2Fswiftpackageindex.com%2Fapi%2Fpackages%2Fbdrelling%2FDocCMiddleware%2Fbadge%3Ftype%3Dswift-versions)](https://swiftpackageindex.com/bdrelling/DocCMiddleware)
 [![Platform Compatibility](https://img.shields.io/endpoint?url=https%3A%2F%2Fswiftpackageindex.com%2Fapi%2Fpackages%2Fbdrelling%2FDocCMiddleware%2Fbadge%3Ftype%3Dplatforms)](https://swiftpackageindex.com/bdrelling/DocCMiddleware)
@@ -8,7 +7,7 @@
 
 **DocCMiddleware** enables quick and efficient hosting of DocC documentation with Vapor.
 
-:warning: This repository is a work in progress with many kinks to iron out and tests to write. This repository doesn't do much
+:warning: This repository is a work in progress with many kinks to iron out and tests to write. Your issues and contributors are more than welcome!
 
 ## Usage
 
@@ -75,6 +74,7 @@ If you _did_ use `--hosting-base-path`, then the value you passed in is the rout
 
 See it in action!
 
+- [bdrelling/DocCMiddleware-Example](https://github.com/bdrelling/DocCMiddleware-Example)
 - [https://audiokit.io](https://audiokit.io)
 
 ## Contributing
@@ -83,4 +83,4 @@ Discussions, issues, and pull requests are more than welcome!
 
 ## License
 
-**InstrumentKit** is released under the MIT license. See [LICENSE](/LICENSE) for details.
+This project is released under the MIT license. See [LICENSE](/LICENSE) for details.
