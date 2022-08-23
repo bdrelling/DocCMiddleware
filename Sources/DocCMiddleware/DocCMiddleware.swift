@@ -95,7 +95,7 @@ public struct DocCMiddleware: AsyncMiddleware {
         path.removeFirst()
 
         // Only continue of our path matches the hosting base path for this archive.
-        guard archive.hostingBasePath.isEmpty || path == archive.hostingBasePath.trimmingTrailingSlashes() || path.hasPrefix(archive.hostingBasePath) else {
+        guard archive.hostingBasePath.isEmpty || path == archive.hostingBasePath.trimmingSlashes() || path.hasPrefix(archive.hostingBasePath.trimmingLeadingSlashes()) else {
             return nil
         }
 
@@ -106,16 +106,16 @@ public struct DocCMiddleware: AsyncMiddleware {
 
         // TODO: Evaluate with regex? This is broken, but close: ^[/]?[a-zA-Z]+[/]?(?:documentation|tutorials)?[/]?
 
-        if path.trimmingTrailingSlashes() == archive.hostingBasePath.trimmingTrailingSlashes() || path.trimmingTrailingSlashes() == "\(archive.hostingBasePath)documentation" {
+        if path.trimmingTrailingSlashes() == archive.hostingBasePath.trimmingSlashes() || path.trimmingTrailingSlashes() == "\(archive.hostingBasePath.trimmingLeadingSlashes())documentation" {
             // The path matches our hosting base path and/or documentation path, with or without trailing slashes.
-            return request.redirect(to: "/\(archive.hostingBasePath)documentation/\(archive.archiveName.lowercased())")
-        } else if path.trimmingTrailingSlashes() == "\(archive.hostingBasePath)/tutorials" {
+            return request.redirect(to: "\(archive.hostingBasePath)documentation/\(archive.archiveName.lowercased())")
+        } else if path.trimmingTrailingSlashes() == "\(archive.hostingBasePath.trimmingLeadingSlashes())/tutorials" {
             // The path matches our tutorials path, with or without trailing slashes.
-            return request.redirect(to: "/\(archive.hostingBasePath)tutorials/\(archive.archiveName.lowercased())")
+            return request.redirect(to: "\(archive.hostingBasePath)tutorials/\(archive.archiveName.lowercased())")
         } else if self.staticFileMatches(path: path, for: archive) {
             // The path matches a static file.
             return try await self.streamStaticFile(atPath: path, for: archive, request: request)
-        } else if path == "/\(archive.hostingBasePath)data/documentation.json" {
+        } else if path == "\(archive.hostingBasePath.trimmingLeadingSlashes())data/documentation.json" {
             // The path matches the data.documentation.json within the .doccarchive.
             // This may no longer be required, but is at least meant to safeguard against documentation archives generated in early versions of Xcode 13.
             // If we find we don't really need this, we can rip it out.
@@ -147,7 +147,7 @@ public struct DocCMiddleware: AsyncMiddleware {
 
     private func streamStaticFile(atPath path: String, for archive: DocCArchive, request: Request) async throws -> Response {
         // Remove the hosting base path from the URL path.
-        let relativePath = path.replacingOccurrences(of: "\(archive.hostingBasePath)", with: "")
+        let relativePath = path.replacingOccurrences(of: "\(archive.hostingBasePath.trimmingLeadingSlashes())", with: "")
 
         // Define our absolute file path.
         let absoluteFilePath = self.documentationDirectory
@@ -164,13 +164,13 @@ public struct DocCMiddleware: AsyncMiddleware {
 
     private func staticFileMatches(path: String, for archive: DocCArchive) -> Bool {
         for file in self.staticFiles {
-            if path == "\(archive.hostingBasePath)\(file)" || path == "\(archive.hostingBasePath)\(file)" {
+            if path == "\(archive.hostingBasePath.trimmingLeadingSlashes())\(file)" || path == "\(archive.hostingBasePath.trimmingLeadingSlashes())\(file)" {
                 return true
             }
         }
 
         for filePrefix in self.staticFilePrefixes {
-            if path.hasPrefix("\(archive.hostingBasePath)\(filePrefix)") || path.hasPrefix("\(archive.hostingBasePath)\(filePrefix)") {
+            if path.hasPrefix("\(archive.hostingBasePath.trimmingLeadingSlashes())\(filePrefix)") || path.hasPrefix("\(archive.hostingBasePath.trimmingLeadingSlashes())\(filePrefix)") {
                 return true
             }
         }

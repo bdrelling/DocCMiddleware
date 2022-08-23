@@ -39,8 +39,8 @@ public struct DocCArchive {
             self.archivePath = "\(directory.trimmingTrailingSlashes())/\(filename)"
         }
 
-        if let hostingBasePath = hostingBasePath {
-            self.hostingBasePath = "\(hostingBasePath)/"
+        if let hostingBasePath = hostingBasePath, !hostingBasePath.isEmpty {
+            self.hostingBasePath = "/\(hostingBasePath)/"
         } else {
             self.hostingBasePath = ""
         }

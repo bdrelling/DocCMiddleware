@@ -8,6 +8,7 @@ try LoggingSystem.bootstrap(from: &env)
 let app = Application(env)
 defer { app.shutdown() }
 
-app.middleware.use(DocCMiddleware(app: app, archive: .init(name: "DocCMiddleware", hostingBasePath: "DocCMiddleware")))
+// Host documentation at the root. We explicit pass in hostingBasePath, but we don't need to here.
+app.middleware.use(DocCMiddleware(app: app, archive: .init(name: "DocCMiddleware", hostingBasePath: "")))
 
 try app.run()
