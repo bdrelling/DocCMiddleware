@@ -24,12 +24,6 @@ let package = Package(
                 .product(name: "Vapor", package: "vapor"),
             ]
         ),
-        .executableTarget(
-            name: "Example",
-            dependencies: [
-                .target(name: "DocCMiddleware"),
-            ]
-        ),
         // Test Targets
         .testTarget(
             name: "DocCMiddlewareTests",
