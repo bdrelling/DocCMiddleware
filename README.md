@@ -1,7 +1,7 @@
 # DocCMiddleware
 
 [![CI Status](https://github.com/bdrelling/DocCMiddleware/actions/workflows/tests.yml/badge.svg)](https://github.com/bdrelling/DocCMiddleware/actions/workflows/tests.yml)
-[![Latest Release](https://img.shields.io/github/v/tag/bdrelling/DocCMiddleware?color=blue&label=latest)](https://github.com/bdrelling/DocCMiddleware/releases)
+[![Latest Release](https://img.shields.io/github/v/tag/bdrelling/DocCMiddleware?color=blue&label=latest)](https://github.com/bdrelling/DocCMiddleware/tags)
 [![Swift Compatibility](https://img.shields.io/endpoint?url=https%3A%2F%2Fswiftpackageindex.com%2Fapi%2Fpackages%2Fbdrelling%2FDocCMiddleware%2Fbadge%3Ftype%3Dswift-versions)](https://swiftpackageindex.com/bdrelling/DocCMiddleware)
 [![Platform Compatibility](https://img.shields.io/endpoint?url=https%3A%2F%2Fswiftpackageindex.com%2Fapi%2Fpackages%2Fbdrelling%2FDocCMiddleware%2Fbadge%3Ftype%3Dplatforms)](https://swiftpackageindex.com/bdrelling/DocCMiddleware)
 [![License](https://img.shields.io/github/license/bdrelling/DocCMiddleware)](https://github.com/bdrelling/DocCMiddleware/blob/main/LICENSE)
