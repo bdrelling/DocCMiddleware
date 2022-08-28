@@ -11,9 +11,9 @@ let package = Package(
     ],
     dependencies: [
         // 💧 Vapor
-        .package(url: "https://github.com/vapor/vapor", from: "4.65.1"),
+        .package(url: "https://github.com/vapor/vapor", from: "4.0.0"),
         // Development
-        .package(url: "https://github.com/swift-kipple/Tools", from: "0.2.1"),
+        .package(url: "https://github.com/swift-kipple/Tools", from: "0.3.1"),
     ],
     targets: [
         // Product Targets
