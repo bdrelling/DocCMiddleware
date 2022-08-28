@@ -10,8 +10,3 @@ Package.resolved
 
 # For the VS Code fans.
 .vscode
-
-# For documentation generation.
-# We don't keep this in the repository -- we just generate for tests.
-Docs/
-*.doccarchive
