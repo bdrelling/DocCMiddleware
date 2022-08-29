@@ -131,13 +131,15 @@ public struct DocCMiddleware: AsyncMiddleware {
 
     private func staticFileMatches(path: String, for archive: DocCArchive) -> Bool {
         for file in self.staticFiles {
-            if path == "\(archive.hostingBasePath.trimmingLeadingSlashes())\(file)" || path == "\(archive.hostingBasePath.trimmingLeadingSlashes())\(file)" {
+            if path == "\(archive.hostingBasePath.trimmingLeadingSlashes())\(file)"
+                || path == "\(archive.hostingBasePath.trimmingLeadingSlashes())\(file)" {
                 return true
             }
         }
 
         for filePrefix in self.staticFilePrefixes {
-            if path.hasPrefix("\(archive.hostingBasePath.trimmingLeadingSlashes())\(filePrefix)") || path.hasPrefix("\(archive.hostingBasePath.trimmingLeadingSlashes())\(filePrefix)") {
+            if path.hasPrefix("\(archive.hostingBasePath.trimmingLeadingSlashes())\(filePrefix)")
+                || path.hasPrefix("\(archive.hostingBasePath.trimmingLeadingSlashes())\(filePrefix)") {
                 return true
             }
         }
