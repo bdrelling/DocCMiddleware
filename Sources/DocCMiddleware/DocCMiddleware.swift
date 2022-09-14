@@ -3,11 +3,6 @@
 import Vapor
 
 /// Vapor middleware that serves files from a DocC archive.
-///
-/// _Developer Note: This file was copied as-is from its source rather than being pulled in as a dependency
-/// because the source package includeds website modules as well, which we don't want._
-///
-/// Source: [JosephDuffy/VaporDocC](https://github.com/JosephDuffy/VaporDocC)
 public struct DocCMiddleware: AsyncMiddleware {
     private let documentationDirectory: String
     private let archives: [DocCArchive]
