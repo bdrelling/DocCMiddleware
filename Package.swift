@@ -13,10 +13,9 @@ let package = Package(
         .library(name: "DocCMiddleware", targets: ["DocCMiddleware"]),
     ],
     dependencies: [
-        // 💧 Vapor
         .package(url: "https://github.com/vapor/vapor", from: "4.0.0"),
         // Development
-        .package(url: "https://github.com/swift-kipple/Tools", from: "0.3.1"),
+        .package(url: "https://github.com/swift-kipple/Tools", from: "0.3.6"),
     ],
     targets: [
         // Product Targets
