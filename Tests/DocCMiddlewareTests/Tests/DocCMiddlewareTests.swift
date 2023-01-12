@@ -1,4 +1,4 @@
-// Copyright © 2022 Brian Drelling. All rights reserved.
+// Copyright © 2023 Brian Drelling. All rights reserved.
 
 import DocCMiddleware
 import XCTVapor
@@ -7,6 +7,9 @@ final class DocCMiddlewareTests: XCTestCase {
     func testDocCMiddleware() throws {
         let app = Application(.testing)
         defer { app.shutdown() }
+
+        // Ensure automatic redirects are never followed.
+        app.http.client.configuration.redirectConfiguration = .follow(max: 5, allowCycles: false)
 
         app.middleware.use(DocCMiddleware(app: app, archive: "DocCMiddleware"))
 
